@@ -1,6 +1,9 @@
 #ifndef CRYPTOGRAPHY_H
 #define CRYPTOGRAPHY_H
 
-// TODO
+#include "encryption/CaesarEncrypt.h"
+#include "encryption/VigenereEncrypt.h"
+#include "decryption/CaesarDecrypt.h"
+#include "decryption/VigenereDecrypt.h"
 
 #endif

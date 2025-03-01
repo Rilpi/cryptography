@@ -6,10 +6,10 @@
 class CaesarDecrypt
 {
 private:
-    int key;
+    int shift;
 
 public:
-    CaesarDecrypt(int k) : key(k) {};
+    CaesarDecrypt(int s) : shift(s) {};
     
     std::string decrypt(const std::string& data);
 };
