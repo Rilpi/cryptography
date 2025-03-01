@@ -62,7 +62,13 @@ modes get_mode(const std::string& s)
 
 int get_key(const std::string& s)
 {
-    
+    for (auto i : s)
+    {
+        if (!isdigit(i))
+            return 0;
+    }
+
+    return std::stoi(s);
 }
 
 bool validate_filename(const std::string& file)
