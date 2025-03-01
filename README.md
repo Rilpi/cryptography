@@ -1,1 +1,1 @@
-# cryptography
+# Library to implement different cryptographic functions
