@@ -7,9 +7,8 @@ enum modes {encrypt, decrypt, invalid};
 // Function prototypes
 modes get_mode(const std::string& s);
 int get_key(const std::string& s);
-bool validate_filename(const std::string& file);
-std::string get_data(const std::string& file);
-void replace_data(const std::string& data);
+void get_data(std::ifstream& ifile, std::string& data);
+void replace_data(const std::string& file, const std::string& data);
 
 int main(int argc, char** argv)
 {
@@ -18,19 +17,31 @@ int main(int argc, char** argv)
         std::cout << "Usage: ./caesar <Mode> <Key> <DataFile>" << std::endl;
     }
 
-    // Validate args
+    // Validate mode
     modes mode = get_mode(argv[1]);
 
+    // Validate key
     int key = get_key(argv[2]);
     if (key == 0)
         mode = invalid;
 
-    std::string data_file = argv[3];
-    validate_filename(data_file);
-    
     // Get data from file
-    std::string data = get_data(data_file);
+    std::string data;
+    std::string file_name = argv[3];
+    std::ifstream ifile(file_name, std::ios::in);
 
+    if (!ifile.is_open()) // Invalid file
+    {
+        mode = invalid;
+    }
+    else // Valid file
+    {
+        get_data(ifile, data);
+    }
+
+    ifile.close();
+
+    // Execute selected mode
     if (mode == encrypt)
     {
         CaesarEncrypt encryptor(key);
@@ -47,8 +58,10 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    replace_data(data);
+    // Replace initial data with transformed data
+    replace_data(file_name, data);
 }
+
 
 modes get_mode(const std::string& s)
 {
@@ -71,17 +84,19 @@ int get_key(const std::string& s)
     return std::stoi(s);
 }
 
-bool validate_filename(const std::string& file)
+void get_data(std::ifstream& ifile, std::string& data)
 {
-    // TODO
+    while (!ifile.eof())
+    {
+        std::string s;
+        ifile >> s;
+        data += s + " ";
+    }
 }
 
-std::string get_data(const std::string& file)
+void replace_data(const std::string& file, const std::string& data)
 {
-    // TODO
-}
-
-void replace_data(const std::string& data)
-{
-    // TODO
+    std::ofstream ofile(file, std::ios::out);
+    ofile << data;
+    ofile.close();
 }
