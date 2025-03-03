@@ -16,50 +16,53 @@ int main(int argc, char** argv)
     {
         std::cout << "Usage: ./caesar <Mode> <Key> <DataFile>" << std::endl;
     }
-
-    // Validate mode
-    modes mode = get_mode(argv[1]);
-
-    // Validate key
-    int key = get_key(argv[2]);
-    if (key == 0)
-        mode = invalid;
-
-    // Get data from file
-    std::string data;
-    std::string file_name = argv[3];
-    std::ifstream ifile(file_name, std::ios::in);
-
-    if (!ifile.is_open()) // Invalid file
-    {
-        mode = invalid;
-    }
-    else // Valid file
-    {
-        get_data(ifile, data);
-    }
-
-    ifile.close();
-
-    // Execute selected mode
-    if (mode == encrypt)
-    {
-        CaesarEncrypt encryptor(key);
-        data = encryptor.encrypt(data);
-    }
-    else if (mode == decrypt)
-    {
-        CaesarDecrypt decryptor(key);
-        data = decryptor.decrypt(data);
-    }
     else
     {
-        std::cout << "Invalid arguments" << std::endl;
-        return 0;
-    }
 
-    // Replace initial data with transformed data
-    replace_data(file_name, data);
+        // Validate mode
+        modes mode = get_mode(argv[1]);
+
+        // Validate key
+        int key = get_key(argv[2]);
+        if (key == 0)
+            mode = invalid;
+
+        // Get data from file
+        std::string data;
+        std::string file_name = argv[3];
+        std::ifstream ifile(file_name, std::ios::in);
+
+        if (!ifile.is_open()) // Invalid file
+        {
+            mode = invalid;
+        }
+        else // Valid file
+        {
+            get_data(ifile, data);
+        }
+
+        ifile.close();
+
+        // Execute selected mode
+        if (mode == encrypt)
+        {
+            CaesarEncrypt encryptor(key);
+            data = encryptor.encrypt(data);
+        }
+        else if (mode == decrypt)
+        {
+            CaesarDecrypt decryptor(key);
+            data = decryptor.decrypt(data);
+        }
+        else
+        {
+            std::cout << "Invalid arguments" << std::endl;
+            return 0;
+        }
+
+        // Replace initial data with transformed data
+        replace_data(file_name, data);
+    }
 }
 
 
