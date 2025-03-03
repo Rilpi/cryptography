@@ -9,7 +9,7 @@ private:
     std::string key;
 
 public:
-    VigenereEncrypt(std::string k) : key(k) {};
+    VigenereEncrypt(const std::string& k);
 
     std::string encrypt(const std::string& data);
 };
