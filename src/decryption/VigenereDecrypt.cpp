@@ -24,7 +24,7 @@ std::string VigenereDecrypt::decrypt(const std::string& data)
                 kpos = 0;
 
             // Add converted character
-            plain += ((tolower(i) - 'a' + 26) - key[kpos] - 'a') % 26 + 'a';
+            plain += ((tolower(i) - 'a' + 26) - (key[kpos] - 'a')) % 26 + 'a';
             
             kpos++;
         }
